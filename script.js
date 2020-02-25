@@ -1,12 +1,8 @@
 // Populate current day
 var timeDay = moment().format("dddd, LL");
-$("#currentDay").text(timeDay);
 
 // Make global var for the timeblocks
 var blockTime = $(".time-block");
-
-// Retrieve data from the textarea
-var getSched = $(".description");
 
 // Current hour retrieve
 var hrCurrent = moment().format("H");
@@ -34,7 +30,7 @@ function startSched(){
     });
     // save to local storage
     localStorage.setItem("todos", JSON.stringify(toDoItems));
-    console.log(toDoItems)
+    //console.log(toDoItems)
 
 }
 
@@ -58,9 +54,51 @@ function colorTimeBlocks(){
 }
 
 // To Do items need to be set to locale storage and retrieved from same and displayed
+function schedRender(){
+    toDoItems = localStorage.getItem("todos");
+    toDoItems = JSON.parse(toDoItems);
+
+    for (var i = 0; i < toDoItems.length; i++){
+        var itemHr = toDoItems[i].hour;
+        var itemText = toDoItems[i].text;
+
+        $("[data-hour=" + itemHr + "]").children("textarea").val(itemText);
+    }
+    //console.log(toDoItems);
+}
+
+function saveButton(){
+    var thisBlock = $(this).parent();
+
+    var hourUpdate = $(this).parent().attr("data-hour");
+    var addItem = (($(this).parent()).children(".description")).val();
+
+    for (var r = 0; r < toDoItems.length; r++){
+        if (toDoItems[r].hour == hourUpdate){
+            toDoItems[r].text = addItem;
+        }
+    }
+    localStorage.setItem("todos", JSON.stringify(toDoItems));
+    schedRender();
+}
+
+// Start certain functions, use the on.ready
+$(document).ready(function(){
+    // Timeblocks color
+    colorTimeBlocks();
+
+    // No todos then startSched
+    if(!localStorage.getItem("todos")){
+        startSched();
+    }
+
+    schedRender();
+
+    // Date needs to display
+    $("#currentDay").text(timeDay);
+
+    $(".saveBtn").on("click", saveButton);
+});
 
 
-// Start certain functions
-// Timeblocks color
-colorTimeBlocks();
 
