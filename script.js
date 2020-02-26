@@ -47,7 +47,7 @@ function colorTimeBlocks(){
         if (thisHour == hrCurrent) {
             thisBlock.addClass("present").removeClass("past future");
         }
-        if (thisHour < hrCurrent) {
+        if (thisHour > hrCurrent) {
             thisBlock.addClass("future").removeClass("present past");
         }
     });
