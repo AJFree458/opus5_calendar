@@ -99,6 +99,3 @@ $(document).ready(function(){
 
     $(".saveBtn").on("click", saveButton);
 });
-
-
-
