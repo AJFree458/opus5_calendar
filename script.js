@@ -10,6 +10,25 @@ var hrCurrent = moment().format("H");
 // Retrieve schedule items
 var toDoItems = [];
 
+// Set the timeblock colors based on time
+function colorTimeBlocks(){
+    blockTime.each(function(){
+        var thisBlock = $(this);
+        var thisHour = parseInt(thisBlock.attr("data-hour"));
+
+        // Add styling and take it away with if statements
+        if (thisHour < hrCurrent) {
+            thisBlock.addClass("past").removeClass("present future");
+        }
+        if (thisHour == hrCurrent) {
+            thisBlock.addClass("present").removeClass("past future");
+        }
+        if (thisHour > hrCurrent) {
+            thisBlock.addClass("future").removeClass("present past");
+        }
+    });
+}
+
 // Set up an array for the schedule
 function startSched(){
 //    console.log(toDoItems);
@@ -32,25 +51,6 @@ function startSched(){
     localStorage.setItem("todos", JSON.stringify(toDoItems));
     //console.log(toDoItems)
 
-}
-
-// Set the timeblock colors based on time
-function colorTimeBlocks(){
-    blockTime.each(function(){
-        var thisBlock = $(this);
-        var thisHour = parseInt(thisBlock.attr("data-hour"));
-
-        // Add styling and take it away with if statements
-        if (thisHour < hrCurrent) {
-            thisBlock.addClass("past").removeClass("present future");
-        }
-        if (thisHour == hrCurrent) {
-            thisBlock.addClass("present").removeClass("past future");
-        }
-        if (thisHour > hrCurrent) {
-            thisBlock.addClass("future").removeClass("present past");
-        }
-    });
 }
 
 // To Do items need to be set to locale storage and retrieved from same and displayed
