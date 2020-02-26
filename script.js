@@ -62,7 +62,7 @@ function schedRender(){
         var itemHr = toDoItems[i].hour;
         var itemText = toDoItems[i].text;
 
-        $("[data-hour=" + itemHr + "]").children("textarea").val(itemText);
+        $("[data-hour=" + itemHr + "]").children(".description").val(itemText);
     }
     //console.log(toDoItems);
 }
